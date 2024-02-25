@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Observable Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.2.1/mocha.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.2.1/mocha.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.2.0/sinon.min.js"></script>
+    <script>mocha.setup('bdd');</script>
+    <script src="bdd.js"></script>
+
+    <script src="../message-type.js"></script>
+    <script src="../observable.js"></script>
+
+    <style>
+        body { padding: 20px; }
+    </style>
+</head>
+<body>
+    <div id="mocha"></div>
+    <script src="test-observable.js"></script>
+    <script>mocha.run();</script>
+</body>
+</html>
+
