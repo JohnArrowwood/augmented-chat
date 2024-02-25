@@ -1,5 +1,3 @@
-const { expect } = chai;
-
 describe('Observable', function() {
     let observable;
     let callback;
