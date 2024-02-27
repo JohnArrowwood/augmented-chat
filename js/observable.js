@@ -1,33 +1,34 @@
 class Observable {
+    
     #emitter;
-    #using_wildcard;
+    #wildcard;
 
     constructor() {
         this.#emitter = document.createElement('div');
-        this.#using_wildcard = 0;
+        this.#wildcard = new Set();
     }
 
     #normalize( name ) {
-        if ( typeof name === 'symbol' ) return name.toString();
-        throw new Error('Observables require message types to be symbols' );
+        if ( typeof name !== 'symbol' )
+            throw new Error('Observables require message types to be symbols' );
+        return name.toString();
     }
 
     subscribe( name, callback ) {
-        name = this.#normalize( name );
-        if ( name === '*' ) this.#using_wildcard += 1;
-        this.#emitter.addEventListener( name , callback );
+        if ( name === MessageType.EVERYTHING ) {
+            if ( ! this.#wildcard.has( callback ) )
+                this.#wildcard.add( callback );
+        }
+        this.#emitter.addEventListener( this.#normalize( name ) , callback );
         return this;
     }
 
     unsubscribe( name, callback ) {
-        name = this.#normalize( name );
-        if ( name === '*' ) this.#using_wildcard -= 1;
-        if ( this.#using_wildcard < 0 ) {
-            console.log( "Observable: unsubscribed to '*' more times than it was subscribed to" );
-            console.log( callback );
-            throw new Error( 'Observable: unbalanced wildcard subscribe/unsubscribe calls' );
+        if ( name === MessageType.EVERYTHING ) {
+            if ( this.#wildcard.has( callback ) )
+                this.#wildcard.delete( callback );
         }
-        this.#emitter.removeEventListener( name, callback );
+        this.#emitter.removeEventListener( this.#normalize( name ), callback );
         return this;
     }
 
@@ -35,9 +36,14 @@ class Observable {
         name = this.#normalize( name );
         try {
             this.#emitter.dispatchEvent( new CustomEvent( name, { detail: data } ) );
-            if ( this.#using_wildcard > 0 ) {
-                this.#emitter.dispatchEvent( new CustomEvent( '*', { detail: { event: name, data: data } } ) );
-            }    
+            if ( this.#wildcard.size > 0 ) {
+                this.#emitter.dispatchEvent( 
+                    new CustomEvent( 
+                        this.#normalize( MessageType.EVERYTHING ), 
+                        { detail: { event: name, data: data } } 
+                    ) 
+                );
+            }
         }
         catch (error) {
             console.log( "Error encountered during event dispatch" );

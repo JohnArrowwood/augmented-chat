@@ -1,4 +1,5 @@
 const MessageType = Object.freeze({
+    EVERYTHING: Symbol( '*' ),
     TRANSACTION_BEGIN: Symbol('transactionBegin'),
     TRANSACTION_END: Symbol('transactionEnd'),
     CONFIG_SET: Symbol( 'configurationSet' ),

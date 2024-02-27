@@ -123,4 +123,21 @@ describe('Observable', function() {
             done();
         }, 0);
     });
+
+    test( 'MessageType.EVERYTHING' )
+    .given( 'an observable' )
+    .and(   'a subscriber on the TRANSACTION_BEGIN event' )
+    .and(   'a subscriber on the EVERYTHING event' )
+    .when(  '.begin() is called' )
+    .then(  'both event handlers receive a notification', 
+        function( done ) {
+            observable.subscribe( MessageType.TRANSACTION_BEGIN, callback );
+            observable.subscribe( MessageType.EVERYTHING, callback );
+            observable.begin();
+            setTimeout( () => {
+                expect( callback.calledTwice ).to.be.true;
+                done();
+            }, 0 );
+        }
+    );
 });
