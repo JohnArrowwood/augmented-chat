@@ -1,20 +1,10 @@
 class NavigationController {
-    static instance;
     #bus; // the global message bus
 
-    constructor() {
-        if ( NavigationController.instance ) {
-            return NavigationController.instance.#init();
-        }
-        this.#init();
+    constructor( element ) {
+        this.#initBus();
+        if ( element ) this.#initNavigationListeners( element );
         NavigationController.instance = this;
-    }
-
-    #init() {
-        return (
-            this.#initBus()
-                .#initNavigationListeners()
-        );
     }
 
     #initBus() {
@@ -22,9 +12,7 @@ class NavigationController {
         return this;
     }
 
-    #initNavigationListeners() {
-        let nav = document.getElementById( 'nav' );
-        if ( ! nav ) throw new Error( 'Your document lacks a <div id="nav"> element.' );
+    #initNavigationListeners( nav ) {
         let items = nav.getElementsByClassName( 'item' );
         for ( let i = 0 ; i < items.length ; i++ ) {
             this.handle( items[i] );
