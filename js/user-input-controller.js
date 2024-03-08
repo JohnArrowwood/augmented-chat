@@ -1,4 +1,5 @@
 class UserInputController {
+    #conversation_id
     #input;
     #bus;
 
@@ -9,6 +10,7 @@ class UserInputController {
 
         this
             .#bus
+            .subscribe( MessageType.CONVERSATION_ID, ( event ) => this.#conversation_id = event.detail )
             .subscribe( MessageType.CONVERSATION_CLEAR, () => this.clear() )
             .subscribe( MessageType.USER_INPUT_CLEAR, () => this.clear() )
             .subscribe( MessageType.USER_INPUT_SET, ( event ) => this.set( event.detail ) )
@@ -19,7 +21,7 @@ class UserInputController {
         this.#input.addEventListener( 'keydown', ( event ) => {
             const isEnter = event.key === 'Enter';
             const withShift = event.shiftKey;
-            if ( isEnter && ! withShift ) {
+            if ( isEnter && ! withShift && this.#input.value.length > 0 ) {
                 this.#bus.emit( MessageType.USER_INPUT_SEND, null );
                 event.preventDefault();
             }
@@ -43,9 +45,11 @@ class UserInputController {
         let value = this.#input.value.trim();
         if ( value ) {
             this.#bus.emit( MessageType.MESSAGE, 
-                new Message()
-                    .withSource( Source.USER )
-                    .withMessage( this.get() )
+                new Message({
+                    conversation_id: this.#conversation_id,
+                    source: Source.USER,
+                    message: this.get()
+                })
             );
         }
         this.clear();

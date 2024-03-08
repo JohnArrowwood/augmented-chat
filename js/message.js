@@ -1,78 +1,62 @@
 class Message {
+
     #id;
-    #date;
+    #conversation_id;
+    #created_date;
     #source;
     #message;
 
-    // TODO: Add #conversationId
-    // requires careful consideration of how to set it
-    
-    constructor() {
-        this.#id = crypto.randomUUID();
-        this.#date = Date.now();
-        this.#source = null;
-        this.#message = "";
+    constructor({
+        id = crypto.randomUUID(),
+        conversation_id = null,
+        created_date = Date.now(),
+        source = null,
+        message = ""
+    } = {} ) {
+        this.#id = ObjectValidator.isUUIDstring( id );
+        this.#conversation_id = ObjectValidator.isUUIDstring( conversation_id );
+        this.#created_date = ObjectValidator.isInteger( created_date );
+        this.#source = ObjectValidator.isValidSource( source );
+        this.#message = ObjectValidator.isNotEmpty( message );
+
+        Object.freeze( this );
     }
 
-    get id() {
-        return this.#id;
+    #validate_id( id ) {
+        if ( ObjectValidator.UUID_PATTERN.test( id ) ) {
+            return id;
+        } else {
+            throw new Error( )
+        }
     }
 
-    set id( value ) {
-        this.#id = value;
-    }
+    // getters
+    get id() { return this.#id; }
+    get conversation_id() { return this.#conversation_id; }
+    get created_date() { return this.#created_date; }
+    get source() { return this.#source; }
+    get message() { return this.#message; }
 
-    withId( id ) {
-        this.#id = id;
-        return this;
+    // fluent but immutable initialization
+    #with( field, value ) {
+        const params = {
+            id: this.id,
+            conversation_id: this.conversation_id,
+            created_date: this.created_date,
+            source: this.source,
+            message: this.message
+        };
+        params[field] = value;
+        return new Message( params );
     }
+    withId( id ) { return this.#with( 'id', id ); }
+    withConversationId( id ) { return this.#with( 'conversation_id', id ); }
+    withCreatedDate( date ) { return this.#with( 'created_date', date ); }
+    withSource( source ) { return this.#with( 'source', source ); }
+    withMessage( text ) { return this.#with( 'message', text ); }
 
-    get date() {
-        return this.#date;
-    }
-
-    set date( value ) {
-        this.#date = value;
-    }
-
-    withDate( date ) {
-        this.#date = date;
-        return this;
-    }
-
-    get source() {
-        return this.#source;
-    }
-
-    set source( value ) {
-        this.#source = value;
-    }
-
-    withSource( source ) {
-        this.#source = source;
-        return this;
-    }
-
-    get message() {
-        return this.#message;
-    }
-
-    set message( value ) {
-        this.#message = value;
-    }
-    
-    withMessage( text ) {
-        this.#message = text;
-        return this;
-    }
-
-    // if needed:
-    static from( { id, date, source, message } ) {
-        const obj = new Message();
-        if ( id )      obj.id( id );
-        if ( date )    obj.date( date );
-        if ( source )  obj.source( source );
-        if ( message ) obj.message( message );
-        return obj;
+    // factory
+    static from( obj ) {
+        return new Message( obj );
     }
 }

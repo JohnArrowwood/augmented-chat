@@ -16,6 +16,7 @@ describe( 'SendButtonController', function() {
     .when(  'the button is clicked' )
     .then(  'the USER_INPUT_SEND event is generated',
         function( done ) {
+            bus.emit( MessageType.CONVERSATION_ID, crypto.randomUUID() );
             const callback = sinon.spy();
             bus.subscribe( MessageType.USER_INPUT_SEND, callback );
             button.click();

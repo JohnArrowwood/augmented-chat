@@ -65,6 +65,7 @@ describe( 'UserInputController', function() {
     .when(  'ENTER is typed' )
     .then(  'the send event is emitted',
         function( done ) {
+            bus.emit( MessageType.CONVERSATION_ID, crypto.randomUUID() );
             input.value = 'something';
             const spy = sinon.spy();
             bus.subscribe( MessageType.USER_INPUT_SEND, spy );

@@ -9,6 +9,7 @@ const MessageType = Object.freeze({
     USER_INPUT_CLEAR: Symbol( 'userInputClear' ),
     USER_INPUT_SET: Symbol( 'userInputSet' ),
     USER_INPUT_SEND: Symbol( 'userInputSend' ),
+    CONVERSATION_ID: Symbol( 'conversationId' ),
     CONVERSATION_NEW: Symbol( 'conversationNew' ),
     CONVERSATION_CLEAR: Symbol( 'conversationClear' ),
     CONVERSATION_SELECT: Symbol( 'conversationSelect' ),
