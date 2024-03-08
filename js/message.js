@@ -22,14 +22,6 @@ class Message {
         Object.freeze( this );
     }
 
-    #validate_id( id ) {
-        if ( ObjectValidator.UUID_PATTERN.test( id ) ) {
-            return id;
-        } else {
-            throw new Error( )
-        }
-    }
-
     // getters
     get id() { return this.#id; }
     get conversation_id() { return this.#conversation_id; }
