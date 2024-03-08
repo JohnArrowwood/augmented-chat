@@ -8,7 +8,3 @@ class MessageValidator extends ObjectValidator {
     }
 
 }   
-
-function ValidateMessage ( message ) {
-    return new MessageValidator( message );
-}

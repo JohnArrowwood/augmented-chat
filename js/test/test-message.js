@@ -1,5 +1,9 @@
 describe( 'Message', function() {
 
+    function ValidateMessage ( message ) {
+        return new MessageValidator( message );
+    }
+    
     let init;
 
     beforeEach( () => {
