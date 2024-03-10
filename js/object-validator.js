@@ -71,7 +71,7 @@ class ObjectValidator {
                         return receiver;    
                     };
 
-                } else if ( prop.endsWith( '_date_is_future' ) ) {  
+                } else if ( prop.endsWith( '_is_future' ) ) {  
 
                     field = prop.replace( /_is_future$/, "" );
                     target.test( m => {
@@ -79,7 +79,7 @@ class ObjectValidator {
                     });
                     return receiver;
 
-                } else if ( prop.endsWith( '_date_is_past' ) ) {  
+                } else if ( prop.endsWith( '_is_past' ) ) {  
 
                     field = prop.replace( /_is_past$/, "" );
                     target.test( m => {
@@ -87,7 +87,7 @@ class ObjectValidator {
                     });
                     return receiver;
 
-                } else if ( prop.endsWith( '_date_is_within' ) ) {  
+                } else if ( prop.endsWith( '_is_within' ) ) {  
 
                     field = prop.replace( /_is_within$/, "" );
                     return ( ms ) => {
