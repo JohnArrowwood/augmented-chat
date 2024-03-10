@@ -104,6 +104,14 @@ class ObjectValidator {
         });
     }
 
+    static isString( value ) {
+        if ( typeof value === "string" ) {
+            return value;
+        } else {
+            throw new Error( "String expected" );
+        }
+    }
+
     static isUUIDstring( id ) {
         if ( ObjectValidator.UUID_PATTERN.test( id ) ) {
             return id;
@@ -127,6 +135,15 @@ class ObjectValidator {
             throw new Error( "Known Source expected" );
         }
     }
+
+    static isValidStatus( value ) {
+        if ( typeof value === "symbol" && Object.values( Status ).includes( value ) ) {
+            return value;
+        } else { 
+            throw new Error( "Known Status expected" );
+        }
+    }
+
 
     static isNotEmpty( value ) {
         if ( typeof value === "string" && value.length > 0 ) {
