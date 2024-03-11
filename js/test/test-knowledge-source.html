@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KnowledgeSource Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.2.1/mocha.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.2.1/mocha.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/9.2.0/sinon.min.js"></script>
+    <script>
+        mocha.setup('bdd');
+        const { expect } = chai;
+    </script>
+    <script src="bdd.js"></script>
+
+    <script src="../object-validator.js"></script>
+    <script src="../knowledge-source.js"></script>
+
+    <style>
+        body { padding: 20px; }
+    </style>
+</head>
+<body>
+    <div id="mocha"></div>
+    <script src="test-knowledge-source.js"></script>
+    <script>mocha.run();</script>
+</body>
+</html>
+
