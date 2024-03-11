@@ -124,7 +124,15 @@ class ObjectValidator {
         if ( Number.isFinite( value ) && Number.isInteger( value ) ) {
             return value;
         } else {
-            throw new Error( "Integer value expected")
+            throw new Error( "Integer value expected");
+        }
+    }
+
+    static isBoolean( value ) {
+        if ( typeof value === 'boolean' ) {
+            return value;
+        } else {
+            throw new Error( "Boolean value expected" );
         }
     }
 
