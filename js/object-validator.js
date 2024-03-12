@@ -104,6 +104,14 @@ class ObjectValidator {
         });
     }
 
+    static isArray( value ) {
+        if ( Array.isArray( value ) ) {
+            return value;
+        } else {
+            throw new Error( 'Array expected' );
+        }
+    }
+    
     static isString( value ) {
         if ( typeof value === "string" ) {
             return value;
