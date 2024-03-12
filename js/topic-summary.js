@@ -4,7 +4,7 @@ class TopicSummary {
     #summary;
     #details;
     #tags;
-    #embedding_vector;
+    #embeddings_vector;
     #bins;
 
     constructor({
@@ -13,7 +13,7 @@ class TopicSummary {
         summary = "",
         details = "",
         tags = [],
-        embedding_vector = null,
+        embeddings_vector: embeddings_vector = null,
         bins = [],
     } = {}) {
         this.#from = ObjectValidator.isInteger( from );
@@ -21,30 +21,18 @@ class TopicSummary {
         this.#summary = ObjectValidator.isNotEmpty( summary );
         this.#details = ObjectValidator.isNotEmpty( details );
         this.#tags = [];
-        this.#embedding_vector = embedding_vector;
+        this.#embeddings_vector = embeddings_vector;
         this.#bins = [];
 
         if ( tags ) {
-            if ( ! Array.isArray( tags ) ) {
-                throw new Error( "Tags must be an array" );
-            }
-            tags.forEach( tag => {
-                if ( typeof tag !== "string" ) {
-                    throw new Error( "Tags must be strings" );
-                }
-                this.#tags.push( tag );
+            ObjectValidator.isArray( tags ).forEach( tag => {
+                this.#tags.push( Tag.isValid( tag ) );
             });
         }
 
         if ( bins ) {
-            if ( ! Array.isArray( bins ) ) {
-                throw new Error( "Bins must be an array" );
-            }
-            bins.forEach( bin => {
-                if ( typeof bin !== "string" ) {
-                    throw new Error( "Bins must be strings" );
-                }
-                this.#bins.push( bin );
+            ObjectValidator.isArray( bins ).forEach( bin => {
+                this.#bins.push( ObjectValidator.isNotEmpty( bin ) );
             });
         }
 
@@ -57,7 +45,7 @@ class TopicSummary {
     get summary() { return this.#summary; }
     get details() { return this.#details; }
     get tags() { return Object.freeze([...this.#tags]); }
-    get embedding_vector() { return this.#embedding_vector; }
+    get embeddings_vector() { return this.#embeddings_vector; }
     get bins() { return Object.freeze([...this.#bins]); }
 
     // TODO: Determine how these will be created and updated by the LLM

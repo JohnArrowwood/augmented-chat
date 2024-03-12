@@ -13,7 +13,7 @@ describe( 'TopicSummary', function() {
             summary: "short summary",
             details: "more detailed explanation of the topic",
             tags: ["foo", "bar"],
-            embedding_vector: "pretend-this-is-an-embedding-vector",
+            embeddings_vector: "pretend-this-is-an-embedding-vector",
             bins: [ "AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ" ],
         };
     });
@@ -255,49 +255,49 @@ describe( 'TopicSummary', function() {
 
         });
 
-        describe( 'embedding_vector', function() {
+        describe( 'embeddings_vector', function() {
 
             test( 'may be omitted' )
             .given( 'no embedding vector' )
             .when(  'a topic summary is created' )
-            .then(  'the embedding_vector is initialized to null',
+            .then(  'the embeddings_vector is initialized to null',
                 function() {
-                    delete init.embedding_vector;
+                    delete init.embeddings_vector;
                     const topic = new TopicSummary( init );
-                    expect( topic.embedding_vector ).to.be.null;
+                    expect( topic.embeddings_vector ).to.be.null;
                 }
             );
 
             test( 'may be provided as null' )
-            .given( 'embedding_vector is explicitly set to null' )
+            .given( 'embeddings_vector is explicitly set to null' )
             .when(  'the object is created' )
             .then(  'the field is set to null',
                 function() {
-                    init.embedding_vector = null;
+                    init.embeddings_vector = null;
                     const topic = new TopicSummary( init );
-                    expect( topic.embedding_vector ).to.be.null;
+                    expect( topic.embeddings_vector ).to.be.null;
                 }
             );
 
             test( 'may be provided as an empty string' )
-            .given( 'embedding_vector is set to an empty string' )
+            .given( 'embeddings_vector is set to an empty string' )
             .when(  'the object is created' )
             .then(  'the field is set to the empty string',
                 function() {
-                    init.embedding_vector = "";
+                    init.embeddings_vector = "";
                     const topic = new TopicSummary( init );
-                    expect( topic.embedding_vector ).to.be.empty;
+                    expect( topic.embeddings_vector ).to.be.empty;
                 }
             );
 
             test( 'may be provided as a non-empty string' )
-            .given( 'a value for the embedding_vector' )
+            .given( 'a value for the embeddings_vector' )
             .when(  'the object is created' )
             .then(  'the vector is saved as provided',
                 function() {
-                    init.embedding_vector = "an-unreal-embedding-vector";
+                    init.embeddings_vector = "an-unreal-embedding-vector";
                     const topic = new TopicSummary( init );
-                    expect( topic.embedding_vector ).to.equal( init.embedding_vector );
+                    expect( topic.embeddings_vector ).to.equal( init.embeddings_vector );
                 }
             );
 
@@ -425,13 +425,13 @@ describe( 'TopicSummary', function() {
             }
         );
 
-        test( 'get embedding_vector' )
+        test( 'get embeddings_vector' )
         .given( 'an initialized TopicSummary' )
-        .when(  'the embedding_vector getter is called' )
+        .when(  'the embeddings_vector getter is called' )
         .then(  'it returns the expected value', 
             function () {
                 const topic = new TopicSummary( init );
-                expect( topic.embedding_vector ).to.equal( init.embedding_vector );
+                expect( topic.embeddings_vector ).to.equal( init.embeddings_vector );
             }
         );
 
