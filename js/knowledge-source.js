@@ -20,6 +20,14 @@ class KnowledgeSource {
         });
     }
 
+    static validate( obj ) {
+        if ( obj instanceof KnowledgeSource ) {
+            return obj;
+        } else {
+            throw new Error( 'Not a KnowledgeSource' );
+        }
+    }
+
     constructor({
         type = KnowledgeSource.CONVERSATION,
         conversation_id = null,
